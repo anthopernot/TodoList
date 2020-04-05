@@ -48,7 +48,28 @@ ons-splitter-side[side="left"][animation="overlay"] {
   font-family: system-ui;
 }
 
+.btnDeleteAlliOS {
+  margin-bottom: 10%;
+  background-color: #e2221c;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
 
+.btnDeleteAllandroid {
+  background-color: #e22d36;
+}
+
+.newTaskInput {
+  margin: 5%;
+}
+
+.listCategoryNewTask {
+  margin-bottom: 20px;
+}
+
+#divDeleteAll {
+  margin-bottom: 2%;
+}
 
 /********************
  *** Animation CSS ***

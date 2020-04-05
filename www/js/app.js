@@ -1,20 +1,16 @@
 // App logic.
 window.myApp = {};
 
-var notify = function() {
-  console.log('Projet TodoList - PERNOT Anthony AI2');
-};
-
 window.addEventListener('load', function(e){
     var page = e.target;
 
-    this.notify();
+    console.log('Projet TodoList - PERNOT Anthony AI2');
 
     page.querySelector('[component="button/welcome"]').onclick = function(){
       document.querySelector('#myNavigator').resetToPage('splitter.html');
     };
-});
 
+});
 
 document.addEventListener('init', function(event) {
   var page = event.target;
@@ -34,5 +30,9 @@ document.addEventListener('init', function(event) {
         myApp.services.tasks.create(data);
       });
     }
+
   }
+
 });
+
+
