@@ -10,6 +10,7 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+    <script src="js/storage.js"></script>
     <script>
         ons.platform.select('ios');
     </script>
@@ -90,7 +91,7 @@
 
             <ons-if platform="ios other">
                 <div class="bottom-bar" id="divDeleteAll">
-                    <ons-button position="bottom" class="btnDeleteAlliOS" id="oui" component="button/deleteAll" modifier="large"><ons-icon icon="fa-trash"></ons-icon> Tout supprimer</ons-button>
+                    <ons-button position="bottom" class="btnDeleteAlliOS" component="button/deleteAll" onclick="myApp.controllers.createAlertDialog()" modifier="large"><ons-icon icon="fa-trash"></ons-icon> Tout supprimer</ons-button>
                 </div>
 
                 <!--
@@ -103,11 +104,24 @@
 
             <ons-if platform="android">
                 <div class="bottom-bar">
-                    <ons-button class="btnDeleteAllandroid" id="oui" component="button/deleteAll" modifier="large"><ons-icon icon="fa-trash"></ons-icon> Tout supprimer</ons-button>
+                    <ons-button class="btnDeleteAllandroid" onclick="myApp.controllers.createAlertDialog()" component="button/deleteAll" modifier="large"><ons-icon icon="fa-trash"></ons-icon> Tout supprimer</ons-button>
                 </div>
             </ons-if>
 
         </ons-page>
+    </template>
+
+    <template id="alert-dialog.html">
+        <ons-alert-dialog id="dialog" modifier="rowfooter">
+            <div class="alert-dialog-title">Voulez-vous tout supprimer ?</div>
+            <div class="alert-dialog-content">
+                Toutes les données de l'application vont être supprimées
+            </div>
+            <div class="alert-dialog-footer">
+                <ons-alert-dialog-button onclick="myApp.controllers.hideAlertDialog()">Fermer</ons-alert-dialog-button>
+                <ons-alert-dialog-button onclick="myApp.storage.deleteAll()" id="okDeleteAll">Supprimer</ons-alert-dialog-button>
+            </div>
+        </ons-alert-dialog>
     </template>
 
 </body>

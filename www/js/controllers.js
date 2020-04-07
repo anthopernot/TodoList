@@ -1,19 +1,10 @@
-/***********************************************************************
- * App Controllers. These controllers will be called on page initialization. *
- ***********************************************************************/
 
 myApp.controllers = {
-
-  //////////////////////////
-  // Tabbar Page Controller //
-  //////////////////////////
   tabbarPage: function(page) {
-    // Set button functionality to open/close the menu.
     page.querySelector('[component="button/menu"]').onclick = function() {
       document.querySelector('#mySplitter').left.toggle();
     };
 
-    // Set button functionality to push 'new_task.html' page.
     Array.prototype.forEach.call(page.querySelectorAll('[component="button/new-task"]'), function(element) {
       element.onclick = function() {
         document.querySelector('#myNavigator').pushPage('html/new_task.html');
@@ -21,6 +12,30 @@ myApp.controllers = {
 
       element.show && element.show(); // Fix ons-fab in Safari.
     });
+  },
+  createAlertDialog: function() {
+    var dialog = document.querySelector('#dialog');
+    if (!dialog) {
+      ons.createElement('alert-dialog.html', { append: true }).then(function(dialog) {
+        dialog.show();
+      });
+    } else {
+      dialog.show();
+    }
+  },
+  hideAlertDialog: function () {
+    document.getElementById('dialog').hide();
+  },
+  addCategory: function () {
+    var value = document.querySelector('.newTaskInput').textContent;
+
+      if(value !== ""){
+         myApp.services.categories.create(value);
+      }else{
+        console.error('Veuillez renseignez un nom à la catégorie');
+      }
+
   }
 
 };
+

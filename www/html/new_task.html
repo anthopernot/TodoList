@@ -7,41 +7,26 @@
   </ons-toolbar>
   <ons-list-title>Ajoutez un nom et une description</ons-list-title>
   <ons-list>
-    <ons-input class="newTaskInput" placeholder="Nom"></ons-input>
-    <ons-input class="newTaskInput" placeholder="Description"></ons-input>
+    <ons-input class="newTaskInput" id="inputNameTask" placeholder="Nom"></ons-input>
+    <ons-input class="newTaskInput" id="inputDescrTask" placeholder="Description"></ons-input>
   </ons-list>
   <ons-list-title>Choisissez une date limite à votre tâche</ons-list-title>
   <ons-list>
-    <ons-input type="date" class="newTaskInput"></ons-input>
+    <ons-input type="date" id="inputDateTask" class="newTaskInput"></ons-input>
   </ons-list>
   <ons-list-title>Choisissez la catégorie de votre tâche</ons-list-title>
     <ons-list class="listCategoryNewTask">
       <ons-list-item>
-        <ons-input class="newTaskInput" placeholder="AJouter une catégorie"></ons-input>
+        <ons-input class="newTaskInput" name="name" placeholder="AJouter une catégorie"></ons-input>
         <div class="right">
-          <ons-button>
+          <ons-button id="addCategory">
             <ons-icon icon="fa-plus"></ons-icon>
           </ons-button>
         </div>
       </ons-list-item>
-      <ons-list-item tappable>
-          <label class="left">
-            <ons-radio name="color" input-id="radio-1" checked></ons-radio>
-          </label>
-          <label for="radio-1" class="center">
-            Catégorie 1
-          </label>
-        </ons-list-item>
-        <ons-list-item tappable>
-          <label class="left">
-            <ons-radio name="color" input-id="radio-2"></ons-radio>
-          </label>
-          <label for="radio-2" class="center">
-            Catégorie 2
-          </label>
-        </ons-list-item>
     </ons-list>
 
-  <ons-button modifier="large"><ons-icon icon="fa-save"></ons-icon> Enregistrer</ons-button>
+  <ons-button id="btnSaveTask" modifier="large"><ons-icon icon="fa-save"></ons-icon> Enregistrer</ons-button>
 
 </ons-page>
+
