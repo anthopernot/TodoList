@@ -7,13 +7,12 @@ myApp.services = {
       myApp.storage.createTask(data);
 
       var taskItem = ons.createElement(
-        //'<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +
-        '<ons-list-item tappable category="' + localStorage.getItem('description') + '">' +
+        '<ons-list-item tappable category="' + data.description + '">' +
         '<label class="left">' +
         '<ons-checkbox></ons-checkbox>' +
         '</label>' +
         '<div class="center">' +
-          localStorage.getItem('title') +
+          data.title +
         '</div>' +
         '<div class="right">' +
         '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
@@ -44,10 +43,10 @@ myApp.services = {
       var categoryItem = ons.createElement(
           '<ons-list-item tappable>' +
           '<label class="left">' +
-          '<ons-radio name="color" input-id="radio-'+localStorage.getItem('id')+'"></ons-radio>' +
+          '<ons-radio name="color" input-id="radio-'+data.id+'"></ons-radio>' +
           '</label>' +
-          '<label for="radio-'+localStorage.getItem('id')+'" class="center">' +
-          localStorage.getItem('name') +
+          '<label for="radio-'+data.id+'" class="center">' +
+           data.name +
           '</label>' +
           '</ons-list-item>'
       );
@@ -57,10 +56,44 @@ myApp.services = {
       var categoryTaskList = document.querySelector('.listCategoryNewTask');
       categoryTaskList.appendChild(categoryItem);
 
+    },
+    addToMenuPage: function () {
+      myApp.services.categoriesTab.forEach(function (data) {
+        var categoryItem = ons.createElement(
+            '<ons-list-item id="categoryMenuElem'+data.id+'"tappable>' +
+            '<label class="left">' +
+            '<ons-radio name="color" input-id="radio-'+data.id+'"></ons-radio>' +
+            '</label>' +
+            '<label for="radio-'+data.id+'" class="center">' +
+            data.name +
+            '</label>' +
+            '<div class="right">' +
+            '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
+            '</div>' +
+            '</ons-list-item>'
+        );
+
+        categoryItem.data = data;
+
+        var categoryTaskList = document.querySelector('#listCategoryMenu');
+        if(categoryTaskList.childElementCount !== myApp.services.categoriesTab.length){
+          categoryTaskList.appendChild(categoryItem);
+        }
+      });
+    },
+    removeCateToMenuPage : function () {
+      var page = document.querySelector('#menuPage');
+      var categoryTaskList = document.querySelector('#listCategoryMenu');
+      if(categoryTaskList.childElementCount !== 0){
+        for(let i=0;i<myApp.services.categoriesTab.length;i++){
+          categoryTaskList.removeChild(document.querySelector('#categoryMenuElem'+i));
+        }
+      }
     }
   },
   fixtures: [
     {
+      id: 0,
       title: 'Download OnsenUUUUI',
       category: 'Programmikkkkng',
       description: 'Some description.',
@@ -69,6 +102,7 @@ myApp.services = {
       urgent: false
     },
     {
+      id:1,
       title: 'Install Monaca CLI',
       category: 'Programming',
       description: 'Some description.',
@@ -77,6 +111,7 @@ myApp.services = {
       urgent: false
     },
     {
+      id:2,
       title: 'Star Onsen UI repo on Github',
       category: 'Super important',
       description: 'Some description.',
@@ -85,6 +120,7 @@ myApp.services = {
       urgent: false
     },
     {
+      id:3,
       title: 'Send donations to Fran and Andreas',
       category: 'Super important',
       description: 'Some description.',
@@ -93,6 +129,7 @@ myApp.services = {
       urgent: false
     },
     {
+      id:4,
       title: 'Profit',
       category: '',
       description: 'Some description.',
@@ -101,6 +138,7 @@ myApp.services = {
       urgent: false
     },
     {
+      id:5,
       title: 'Visit Japan',
       category: 'Travels',
       description: 'Some description.',
@@ -111,10 +149,14 @@ myApp.services = {
   ],
   categoriesTab: [
     {
+      id:0,
       name: 'Category 1',
     },
     {
+      id:1,
       name: 'Category 2',
     }
   ]
 };
+
+

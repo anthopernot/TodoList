@@ -21,7 +21,6 @@
 
 <body>
 
-    <!-- First navigation component: Navigator. This will remain always on top of the app. -->
     <ons-navigator id="myNavigator" page="welcome.html">
     </ons-navigator>
 
@@ -41,7 +40,6 @@
         </ons-page>
     </template>
 
-    <!-- Second navigation component: Splitter. This will disappear if the first component changes its content. -->
     <template id="splitter.html">
         <ons-page>
             <ons-splitter id="mySplitter">
@@ -53,7 +51,6 @@
         </ons-page>
     </template>
 
-    <!-- Third navigation component: Tabbar. This will disappear if the first or second components change their content. -->
     <template id="tabbar.html">
         <ons-page id="tabbarPage">
             <ons-toolbar>
@@ -72,14 +69,12 @@
                 </div>
             </ons-toolbar>
 
-            <!-- Floating Action Button only visible for Android. -->
             <ons-if platform="android">
                 <ons-fab position="right bottom" component="button/new-task" style="margin-bottom: 8%">
                     <ons-icon icon="md-edit"></ons-icon>
                 </ons-fab>
             </ons-if>
 
-            <!-- Auto-positioned Tabbar: top on Android, bottom on iOS/other. -->
             <ons-tabbar id="myTabbar" position="top">
                 <ons-tab page="html/pending_tasks.html" label="En attente" active>
                 </ons-tab>
@@ -93,13 +88,6 @@
                 <div class="bottom-bar" id="divDeleteAll">
                     <ons-button position="bottom" class="btnDeleteAlliOS" component="button/deleteAll" onclick="myApp.controllers.createAlertDialog()" modifier="large"><ons-icon icon="fa-trash"></ons-icon> Tout supprimer</ons-button>
                 </div>
-
-                <!--
-                <ons-fab position="left bottom" style="background-color: #e2221c">
-                    <ons-button class="btnDeleteAlliOS" id="oui" component="button/deleteAll"><ons-icon icon="fa-trash"></ons-icon></ons-button>
-                </ons-fab>
-                -->
-
             </ons-if>
 
             <ons-if platform="android">

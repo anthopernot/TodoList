@@ -26,7 +26,7 @@ myApp.storage = {
     },
     deleteAll: function () {
         if (myApp.storage.storageAvailable('localStorage')) {
-            localStorage.clear();
+            window.localStorage.removeItem('fixtures');
             myApp.controllers.hideAlertDialog();
             console.log('LocalStorage vidé.');
         }
@@ -34,30 +34,65 @@ myApp.storage = {
             console.log("LocalStorage n'est pas disponible.");
         }
     },
+    /**
+     * A REFAIRE
+     * @param data
+     */
     createTask: function (data) {
         if (myApp.storage.storageAvailable('localStorage')) {
-            localStorage.setItem('sizeData',  myApp.services.fixtures.length);
-            localStorage.setItem('id', String(Number(myApp.storage.i)));
-            localStorage.setItem('title', data.title);
-            localStorage.setItem('category', data.category);
-            localStorage.setItem('description', data.description);
-            localStorage.setItem('date', data.date);
-            localStorage.setItem('statut', String(0));
-            localStorage.setItem('urgent', data.urgent);
 
+            var taskJSON = {
+                "id": window.localStorage.setItem('id', String(Number(myApp.storage.i))),
+                "title": window.localStorage.setItem('title', data.title),
+                "category": window.localStorage.setItem('category', data.category),
+                "description" : window.localStorage.setItem('description', data.description),
+                "date": window.localStorage.setItem('date', data.date),
+                "statut": window.localStorage.setItem('statut', String(0)),
+                "urgent": window.localStorage.setItem('urgent', data.urgent)
+            };
+
+            myApp.services.fixtures.push(JSON.stringify(taskJSON));
             myApp.storage.i++;
-
         }
         else {
             console.log("LocalStorage n'est pas disponible.");
         }
     },
-    createCategory:function (data) {
+    /**
+     * A REFAIRE
+     * @param data
+     */
+    createCategory: function (data) {
         if (myApp.storage.storageAvailable('localStorage')) {
-            localStorage.setItem('id', String(Number(myApp.storage.i)));
-            localStorage.setItem('name', data.name);
+            //myApp.services.categoriesTab.push(window.localStorage.setItem('id', String(Number(myApp.storage.i++))));
+            //myApp.services.categoriesTab.push(window.localStorage.setItem('name', data.name));
 
-            myApp.storage.i++;
+                             /**
+                                var cateJSON = {
+                                    "id":  window.localStorage.setItem('id', String(Number(myApp.storage.i))),
+                                    "name": window.localStorage.setItem('name', data.name),
+                                };
+                                myApp.services.categoriesTab.push(JSON.stringify(cateJSON));
+                            */
+
+            //myApp.storage.i++;
+        }
+        else {
+            console.log("LocalStorage n'est pas disponible.");
+        }
+    },
+    /**
+     * A REFAIRE
+     * @param data
+     */
+    createCategoryForInput: function (data) {
+        if (myApp.storage.storageAvailable('localStorage')) {
+            var cateJSON = {
+                "id":  window.localStorage.setItem('id', String(Number(myApp.storage.i))),
+                "name": window.localStorage.setItem('name', data),
+            };
+            myApp.services.categoriesTab.push(JSON.stringify(cateJSON));
+            myApp.services.categories.create(JSON.stringify(cateJSON));
         }
         else {
             console.log("LocalStorage n'est pas disponible.");

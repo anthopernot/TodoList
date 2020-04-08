@@ -24,7 +24,7 @@ myApp.controllers = {
     }
   },
   hideAlertDialog: function () {
-    document.getElementById('dialog').hide();
+    document.querySelector('#dialog').hide();
   },
   addCategory: function () {
     var value = document.querySelector('.newTaskInput').textContent;
