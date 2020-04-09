@@ -61,6 +61,7 @@ myApp.storage = {
             };
             myApp.services.categoriesTab.push(cateJSON);
             localStorage.setItem('categories', myApp.services.categoriesTab);
+            myApp.services.categories.create(cateJSON);
         }
         else {
             console.log("LocalStorage n'est pas disponible.");
@@ -69,7 +70,7 @@ myApp.storage = {
     /**
      * A REFAIRE
      * @param data
-    */
+
     createCategoryForInput: function (data) {
         if (myApp.storage.storageAvailable('localStorage')) {
             var cateJSON = {
@@ -83,7 +84,7 @@ myApp.storage = {
         else {
             console.log("LocalStorage n'est pas disponible.");
         }
-    }
+    }*/
 };
 
 

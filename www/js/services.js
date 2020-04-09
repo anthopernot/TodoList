@@ -58,14 +58,12 @@ myApp.services = {
   categories:{
     create: function (data) {
 
-      //myApp.storage.createCategory(data);
-
       var categoryItem = ons.createElement(
-          '<ons-list-item tappable>' +
+          '<ons-list-item id="categoryNewElem'+data['id']+'" tappable>' +
           '<label class="left">' +
-          '<ons-radio name="color" input-id="radio-'+data['id']+'"></ons-radio>' +
+          '<ons-radio name="color" input-id="radioNew-'+data['id']+'"></ons-radio>' +
           '</label>' +
-          '<label for="radio-'+data['id']+'" class="center">' +
+          '<label for="radioNew-'+data['id']+'" class="center">' +
            data['name'] +
           '</label>' +
           '</ons-list-item>'
@@ -78,15 +76,15 @@ myApp.services = {
         categoryTaskList.appendChild(categoryItem);
       }
     },
-    addToMenuPage: function () {
-      myApp.services.categoriesTab.forEach(function (data) {
+    addToMenuPage: function (data) {
+
         var categoryItem = ons.createElement(
-            '<ons-list-item id="categoryMenuElem'+data.id+'" tappable>' +
+            '<ons-list-item id="categoryMenuElem'+data['id']+'" tappable>' +
             '<label class="left">' +
-            '<ons-radio name="color" input-id="radio-'+data.id+'"></ons-radio>' +
+            '<ons-radio name="color" input-id="radioMenu-'+data['id']+'"></ons-radio>' +
             '</label>' +
-            '<label for="radio-'+data.id+'" class="center">' +
-            data.name +
+            '<label for="radioMenu-'+data['id']+'" class="center">' +
+            data['name'] +
             '</label>' +
             '<div class="right">' +
             '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
@@ -100,7 +98,7 @@ myApp.services = {
         if(categoryTaskList.childElementCount !== myApp.services.categoriesTab.length){
           categoryTaskList.appendChild(categoryItem);
         }
-      });
+
     },
     removeCateToMenuPage : function () {
       var categoryTaskList = document.querySelector('#listCategoryMenu');

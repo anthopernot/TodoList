@@ -53,17 +53,25 @@ document.addEventListener('init', function(event) {
 
     if(page.id === 'menuPage'){
         if(document.querySelector('#menuPage')){
-                myApp.services.categories.addToMenuPage();
+            myApp.services.categoriesTab.forEach(function (data) {
+                myApp.services.categories.addToMenuPage(data);
+            });
         }
         document.querySelector('#allCategory').addEventListener('click', function (e) {
-                myApp.services.categories.addToMenuPage();
+            myApp.services.categoriesTab.forEach(function (data) {
+                myApp.services.categories.addToMenuPage(data);
+            });
         });
     }
 
     if(page.id === 'newTaskPage'){
         if(document.querySelector('#newTaskPage')){
             myApp.services.categoriesTab.forEach(function (data) {
-                myApp.services.categories.create(data);
+                var cateJSON = {
+                    id:data.id,
+                    name:data.name
+                };
+                myApp.services.categories.create(cateJSON);
             });
         }
         document.querySelector('#btnSaveTask').addEventListener('click',function () {
@@ -71,9 +79,17 @@ document.addEventListener('init', function(event) {
 
          document.querySelector('#addCategory').addEventListener('click', function () {
           var input = document.querySelector('.newCateInput');
+          var categoryTaskList = document.querySelector('#listCategoryMenu');
+             var cateJSON = {
+                 id: myApp.services.categoriesTab.length,
+                 name: input.value
+             };
 
           if(input.value !== ""){
-              myApp.storage.createCategoryForInput(input.value);
+              myApp.storage.createCategory(cateJSON);
+              if(categoryTaskList.childElementCount !== 0) {
+                  myApp.services.categories.addToMenuPage(cateJSON);
+              }
               input.value = "";
 
           }else{
