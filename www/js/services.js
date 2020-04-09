@@ -33,10 +33,13 @@ myApp.services = {
 
     },
     removeTaskToHomePage : function () {
+
       var pendingTaskList = document.querySelector('#pending-list');
       var progressTaskList = document.querySelector('#progress-list');
       var completedTaskList = document.querySelector('#completed-list');
+
       if(pendingTaskList.childElementCount !== 0 && progressTaskList.childElementCount !== 0 && completedTaskList.childElementCount !== 0){
+
         for(let i=0;i<myApp.services.fixtures.length;i++){
           if(completedTaskList.querySelector("#taskElem"+i)){
             completedTaskList.removeChild(document.querySelector("#taskElem"+i));
@@ -46,6 +49,7 @@ myApp.services = {
             progressTaskList.removeChild(document.querySelector("#taskElem"+i));
           }
         }
+
       }else{
         console.error('Vous ne pouvez pas supprimer des tâches, elles le sont déjà !');
       }

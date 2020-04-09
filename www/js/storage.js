@@ -38,15 +38,15 @@ myApp.storage = {
     createTask: function (data) {
         if (myApp.storage.storageAvailable('localStorage')) {
             var taskJSON = {
-                'id':myApp.services.fixtures.length,
-                'title': data.title,
-                'category': data.category,
-                'description': data.description,
-                'date': data.date,
-                'statut': 0,
-                'urgent': data.urgent
+                id: myApp.services.fixtures.length,
+                title: data.title,
+                category: data.category,
+                description: data.description,
+                date: data.date,
+                statut: 0,
+                urgent: data.urgent
             };
-            myApp.services.fixtures.push( JSON.stringify(taskJSON) );
+            myApp.services.fixtures.push( taskJSON );
             localStorage.setItem('tasks', myApp.services.fixtures);
         }
         else {
@@ -56,10 +56,10 @@ myApp.storage = {
     createCategory: function (data) {
         if (myApp.storage.storageAvailable('localStorage')) {
             var cateJSON = {
-              'id':myApp.services.categoriesTab.length,
-              'name':data.name
+              id:myApp.services.categoriesTab.length,
+              name:data.name
             };
-            myApp.services.categoriesTab.push( JSON.stringify(cateJSON) );
+            myApp.services.categoriesTab.push(cateJSON);
             localStorage.setItem('categories', myApp.services.categoriesTab);
         }
         else {
@@ -69,15 +69,16 @@ myApp.storage = {
     /**
      * A REFAIRE
      * @param data
-     */
+    */
     createCategoryForInput: function (data) {
         if (myApp.storage.storageAvailable('localStorage')) {
             var cateJSON = {
-                "id":  window.localStorage.setItem('id', String(Number(myApp.storage.i))),
-                "name": window.localStorage.setItem('name', data),
+                id: myApp.services.categoriesTab.length,
+                name: data
             };
-            myApp.services.categoriesTab.push(JSON.stringify(cateJSON));
-            myApp.services.categories.create(JSON.stringify(cateJSON));
+            myApp.services.categoriesTab.push(cateJSON);
+            localStorage.setItem('categories', myApp.services.categoriesTab);
+            myApp.services.categories.create(cateJSON);
         }
         else {
             console.log("LocalStorage n'est pas disponible.");

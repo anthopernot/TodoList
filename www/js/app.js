@@ -67,21 +67,20 @@ document.addEventListener('init', function(event) {
             });
         }
         document.querySelector('#btnSaveTask').addEventListener('click',function () {
-
         });
 
-        /** //////////////// A REFAIRE //////////////////
          document.querySelector('#addCategory').addEventListener('click', function () {
-          var input = document.querySelector('.newTaskInput');
+          var input = document.querySelector('.newCateInput');
 
-          if(input.textContent !== ""){
+          if(input.value !== ""){
               myApp.storage.createCategoryForInput(input.value);
+              input.value = "";
 
           }else{
-              console.log('Veuillez renseignez un nom à la catégorie');
+              console.error('Veuillez renseignez un nom à la catégorie');
           }
         });
-         */
+
     }
 
 });
