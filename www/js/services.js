@@ -31,6 +31,26 @@ myApp.services = {
         completedList.insertBefore(taskItem, taskItem.data['urgent'] ? completedList.firstChild : null);
       }
 
+      taskItem.querySelector('.right').onclick = function() {
+        console.log(JSON.stringify(taskItem.data.id));
+        if(taskItem.data['statut'] === '0'){
+          var pendingList = document.querySelector('#pending-list');
+          pendingList.removeChild(document.getElementById(taskItem.id));
+          myApp.services.fixtures.splice(taskItem.data.i,1);
+          localStorage.setItem('tasks', myApp.services.fixtures);
+        }else if (taskItem.data['statut'] === '1'){
+          var progressList = document.querySelector('#progress-list');
+          progressList.removeChild(document.getElementById(taskItem.id));
+          myApp.services.fixtures.splice(taskItem.data.i,1);
+          localStorage.setItem('tasks', myApp.services.fixtures);
+        }else if (taskItem.data['statut'] === '2'){
+          var completedList = document.querySelector('#completed-list');
+          completedList.removeChild(document.getElementById(taskItem.id));
+          myApp.services.fixtures.splice(taskItem.data.i,1);
+          localStorage.setItem('tasks', myApp.services.fixtures);
+        }
+      };
+
     },
     removeTaskToHomePage : function () {
 
@@ -61,7 +81,7 @@ myApp.services = {
       var categoryItem = ons.createElement(
           '<ons-list-item id="categoryNewElem'+data['id']+'" tappable>' +
           '<label class="left">' +
-          '<ons-radio name="color" input-id="radioNew-'+data['id']+'"></ons-radio>' +
+          '<ons-radio name="categoryNewTask" value="'+data['name']+'" input-id="radioNew-'+data['id']+'"></ons-radio>' +
           '</label>' +
           '<label for="radioNew-'+data['id']+'" class="center">' +
            data['name'] +
@@ -81,7 +101,7 @@ myApp.services = {
         var categoryItem = ons.createElement(
             '<ons-list-item id="categoryMenuElem'+data['id']+'" tappable>' +
             '<label class="left">' +
-            '<ons-radio name="color" input-id="radioMenu-'+data['id']+'"></ons-radio>' +
+            '<ons-radio name="categoryMenu" value="'+data['name']+'" input-id="radioMenu-'+data['id']+'"></ons-radio>' +
             '</label>' +
             '<label for="radioMenu-'+data['id']+'" class="center">' +
             data['name'] +

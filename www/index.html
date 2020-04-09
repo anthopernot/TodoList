@@ -112,6 +112,17 @@
         </ons-alert-dialog>
     </template>
 
+    <template id="alert-dialogNewTask.html">
+        <ons-alert-dialog id="dialogNewTask" modifier="rowfooter">
+            <div class="alert-dialog-title">Remplissez les champs pour pouvoir créer votre tâche</div>
+            <div class="alert-dialog-content">
+            </div>
+            <div class="alert-dialog-footer">
+                <ons-alert-dialog-button onclick="myApp.controllers.hideAlertDialogNewTask()">Fermer</ons-alert-dialog-button>
+            </div>
+        </ons-alert-dialog>
+    </template>
+
 </body>
 
 </html>

@@ -7,12 +7,23 @@
   </ons-toolbar>
   <ons-list-title>Ajoutez un nom et une description</ons-list-title>
   <ons-list>
-    <ons-input class="newTaskInput" id="inputNameTask" placeholder="Nom"></ons-input>
-    <ons-input class="newTaskInput" id="inputDescrTask" placeholder="Description"></ons-input>
+    <ons-input class="newTaskInput" id="inputNameTask" placeholder="Nom" required></ons-input>
+    <ons-input class="newTaskInput" id="inputDescrTask" placeholder="Description" required></ons-input>
   </ons-list>
   <ons-list-title>Choisissez une date limite à votre tâche</ons-list-title>
   <ons-list>
-    <ons-input type="date" id="inputDateTask" class="newTaskInput"></ons-input>
+    <ons-input type="date" id="inputDateTask" class="newTaskInput" required></ons-input>
+  </ons-list>
+  <ons-list-title>Option</ons-list-title>
+  <ons-list>
+    <ons-list-item modifier="nodivider">
+      <label class="center" for="inner-urgent-input">
+        Urgent
+      </label>
+      <div class="right">
+        <ons-switch id="inputUrgent" input-id="inner-urgent-input"></ons-switch>
+      </div>
+    </ons-list-item>
   </ons-list>
   <ons-list-title>Choisissez la catégorie de votre tâche</ons-list-title>
   <ons-list-item>
@@ -29,4 +40,5 @@
   <ons-button id="btnSaveTask" modifier="large"><ons-icon icon="fa-save"></ons-icon> Enregistrer</ons-button>
 
 </ons-page>
+
 

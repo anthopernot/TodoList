@@ -1,14 +1,14 @@
 
 window.myApp = {};
 
+
+
 window.addEventListener('load', function(e){
     var page = e.target;
     console.log('Projet TodoList - PERNOT Anthony AI2');
     page.querySelector('[component="button/welcome"]').onclick = function(){
       document.querySelector('#myNavigator').resetToPage('splitter.html');
     };
-    localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
-    localStorage.setItem('categories', JSON.stringify(myApp.services.categoriesTab));
 });
 
 document.addEventListener('init', function(event) {
@@ -75,6 +75,35 @@ document.addEventListener('init', function(event) {
             });
         }
         document.querySelector('#btnSaveTask').addEventListener('click',function () {
+            var name = document.querySelector('#inputNameTask').value;
+            var description = document.querySelector('#inputDescrTask').value;
+            var date = document.querySelector('#inputDateTask').value;
+            var urgent = document.querySelector('#inputUrgent').checked;
+            var radios = document.getElementsByName('categoryNewTask');
+            var category;
+            for(var i = 0; i < radios.length; i++){
+                if(radios[i].checked){
+                    category = radios[i].value;
+                }
+            }
+            if(name !== "" && description !== "" && date !== ""){
+                var taskJSON = {
+                    id:myApp.services.fixtures.length,
+                    title: name,
+                    category: category,
+                    description: description,
+                    date: date,
+                    statut: '0',
+                    urgent: urgent
+                };
+                myApp.storage.createTask(taskJSON);
+                myApp.services.tasks.create(taskJSON);
+                document.querySelector('#myNavigator').popPage();
+                console.log(JSON.stringify(taskJSON));
+            }else{
+                ons.notification.alert('Veuillez remplir les champs demandés pour pouvoir créer votre tâche ! ');
+                console.error('Veuillez remplir les champs demandés pour pouvoir créer votre tâche ! ');
+            }
         });
 
          document.querySelector('#addCategory').addEventListener('click', function () {

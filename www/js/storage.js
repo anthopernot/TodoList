@@ -1,4 +1,7 @@
 
+localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
+localStorage.setItem('categories', JSON.stringify(myApp.services.categoriesTab));
+
 myApp.storage = {
     storageAvailable: function (type) {
         try {
@@ -25,7 +28,7 @@ myApp.storage = {
     },
     deleteAllTasks: function () {
         if (myApp.storage.storageAvailable('localStorage')) {
-            window.localStorage.removeItem('tasks');
+            localStorage.removeItem('tasks');
            if( myApp.services.tasks.removeTaskToHomePage() ){
                console.log('LocalStorage vidé.');
            }
