@@ -4,15 +4,13 @@ myApp.services = {
 
     create: function (data) {
 
-      myApp.storage.createTask(data);
-
       var taskItem = ons.createElement(
-        '<ons-list-item tappable category="' + data.description + '">' +
+        '<ons-list-item id="taskElem'+data['id'] +'" tappable category="' + data['description'] + '">' +
         '<label class="left">' +
         '<ons-checkbox></ons-checkbox>' +
         '</label>' +
         '<div class="center">' +
-          data.title +
+          data['title'] +
         '</div>' +
         '<div class="right">' +
         '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
@@ -22,31 +20,49 @@ myApp.services = {
 
       taskItem.data = data;
 
-      if(taskItem.data.statut === '0'){
+      if(taskItem.data['statut'] === '0'){
         var pendingList = document.querySelector('#pending-list');
-        pendingList.insertBefore(taskItem, taskItem.data.urgent ? pendingList.firstChild : null);
-      }else if (taskItem.data.statut === '1'){
+        pendingList.insertBefore(taskItem, taskItem.data['urgent'] ? pendingList.firstChild : null);
+      }else if (taskItem.data['statut'] === '1'){
         var progressList = document.querySelector('#progress-list');
-        progressList.insertBefore(taskItem, taskItem.data.urgent ? progressList.firstChild : null);
-      }else if (taskItem.data.statut === '2'){
+        progressList.insertBefore(taskItem, taskItem.data['urgent'] ? progressList.firstChild : null);
+      }else if (taskItem.data['statut'] === '2'){
         var completedList = document.querySelector('#completed-list');
-        completedList.insertBefore(taskItem, taskItem.data.urgent ? completedList.firstChild : null);
+        completedList.insertBefore(taskItem, taskItem.data['urgent'] ? completedList.firstChild : null);
       }
 
     },
+    removeTaskToHomePage : function () {
+      var pendingTaskList = document.querySelector('#pending-list');
+      var progressTaskList = document.querySelector('#progress-list');
+      var completedTaskList = document.querySelector('#completed-list');
+      if(pendingTaskList.childElementCount !== 0 && progressTaskList.childElementCount !== 0 && completedTaskList.childElementCount !== 0){
+        for(let i=0;i<myApp.services.fixtures.length;i++){
+          if(completedTaskList.querySelector("#taskElem"+i)){
+            completedTaskList.removeChild(document.querySelector("#taskElem"+i));
+          }else if(pendingTaskList.querySelector("#taskElem"+i)){
+            pendingTaskList.removeChild(document.querySelector("#taskElem"+i));
+          }else if(progressTaskList.querySelector("#taskElem"+i)){
+            progressTaskList.removeChild(document.querySelector("#taskElem"+i));
+          }
+        }
+      }else{
+        console.error('Vous ne pouvez pas supprimer des tâches, elles le sont déjà !');
+      }
+    }
   },
   categories:{
     create: function (data) {
 
-      myApp.storage.createCategory(data);
+      //myApp.storage.createCategory(data);
 
       var categoryItem = ons.createElement(
           '<ons-list-item tappable>' +
           '<label class="left">' +
-          '<ons-radio name="color" input-id="radio-'+data.id+'"></ons-radio>' +
+          '<ons-radio name="color" input-id="radio-'+data['id']+'"></ons-radio>' +
           '</label>' +
-          '<label for="radio-'+data.id+'" class="center">' +
-           data.name +
+          '<label for="radio-'+data['id']+'" class="center">' +
+           data['name'] +
           '</label>' +
           '</ons-list-item>'
       );
@@ -54,13 +70,14 @@ myApp.services = {
       categoryItem.data = data;
 
       var categoryTaskList = document.querySelector('.listCategoryNewTask');
-      categoryTaskList.appendChild(categoryItem);
-
+      if(categoryTaskList.childElementCount !== myApp.services.categoriesTab.length+1){
+        categoryTaskList.appendChild(categoryItem);
+      }
     },
     addToMenuPage: function () {
       myApp.services.categoriesTab.forEach(function (data) {
         var categoryItem = ons.createElement(
-            '<ons-list-item id="categoryMenuElem'+data.id+'"tappable>' +
+            '<ons-list-item id="categoryMenuElem'+data.id+'" tappable>' +
             '<label class="left">' +
             '<ons-radio name="color" input-id="radio-'+data.id+'"></ons-radio>' +
             '</label>' +
@@ -82,7 +99,6 @@ myApp.services = {
       });
     },
     removeCateToMenuPage : function () {
-      var page = document.querySelector('#menuPage');
       var categoryTaskList = document.querySelector('#listCategoryMenu');
       if(categoryTaskList.childElementCount !== 0){
         for(let i=0;i<myApp.services.categoriesTab.length;i++){
@@ -93,13 +109,13 @@ myApp.services = {
   },
   fixtures: [
     {
-      id: 0,
-      title: 'Download OnsenUUUUI',
-      category: 'Programmikkkkng',
-      description: 'Some description.',
-      date: Date(),
-      statut: '2',
-      urgent: false
+      'id': 0,
+      'title': 'Download OnsenUUUUI',
+      'category': 'Programmikkkkng',
+      'description': 'Some description.',
+      'date': Date(),
+      'statut': '2',
+      'urgent': false
     },
     {
       id:1,
