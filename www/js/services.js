@@ -119,6 +119,13 @@ myApp.services = {
           categoryTaskList.appendChild(categoryItem);
         }
 
+      categoryItem.querySelector('.right').onclick = function() {
+          console.log(JSON.stringify(categoryItem.data.id));
+          categoryTaskList.removeChild(document.getElementById(categoryItem.id));
+          myApp.services.categoriesTab.splice(categoryItem.data.i,1);
+          localStorage.setItem('tasks', myApp.services.categoriesTab);
+      };
+
     },
     removeCateToMenuPage : function () {
       var categoryTaskList = document.querySelector('#listCategoryMenu');
