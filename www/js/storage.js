@@ -29,9 +29,9 @@ myApp.storage = {
     deleteAllTasks: function () {
         if (myApp.storage.storageAvailable('localStorage')) {
             localStorage.removeItem('tasks');
-           if( myApp.services.tasks.removeTaskToHomePage() ){
+           //if( myApp.services.tasks.removeTaskToHomePage() ){
                console.log('LocalStorage vidé.');
-           }
+           //}
             myApp.controllers.hideAlertDialog();
         }
         else {

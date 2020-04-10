@@ -53,14 +53,14 @@
 
     <template id="tabbar.html">
         <ons-page id="tabbarPage">
-            <ons-toolbar>
+            <ons-toolbar class="toolbarCustom">
                 <div class="left">
                     <!-- Toolbar-button with different icons depending on the platform. -->
                     <ons-toolbar-button component="button/menu">
                         <ons-icon icon="ion-navicon, material:md-menu" size="32px, material:24px"></ons-icon>
                     </ons-toolbar-button>
                 </div>
-                <div class="center"><ons-icon icon="fa-edit"></ons-icon> À faire</div>
+                <div class="center" style="color: #005cbf"><ons-icon icon="fa-edit"></ons-icon> À faire</div>
                 <div class="right">
                     <!-- Toolbar-button  only visible for iOS/other. -->
                     <ons-if platform="ios other">
@@ -107,18 +107,7 @@
             </div>
             <div class="alert-dialog-footer">
                 <ons-alert-dialog-button onclick="myApp.controllers.hideAlertDialog()">Fermer</ons-alert-dialog-button>
-                <ons-alert-dialog-button onclick="myApp.storage.deleteAllTasks()" id="okDeleteAll">Supprimer</ons-alert-dialog-button>
-            </div>
-        </ons-alert-dialog>
-    </template>
-
-    <template id="alert-dialogNewTask.html">
-        <ons-alert-dialog id="dialogNewTask" modifier="rowfooter">
-            <div class="alert-dialog-title">Remplissez les champs pour pouvoir créer votre tâche</div>
-            <div class="alert-dialog-content">
-            </div>
-            <div class="alert-dialog-footer">
-                <ons-alert-dialog-button onclick="myApp.controllers.hideAlertDialogNewTask()">Fermer</ons-alert-dialog-button>
+                <ons-alert-dialog-button onclick="myApp.services.tasks.removeTaskToHomePage()" id="okDeleteAll">Supprimer</ons-alert-dialog-button>
             </div>
         </ons-alert-dialog>
     </template>

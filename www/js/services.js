@@ -31,34 +31,111 @@ myApp.services = {
         completedList.insertBefore(taskItem, taskItem.data['urgent'] ? completedList.firstChild : null);
       }
 
-      taskItem.querySelector('.right').onclick = function() {
-        console.log(JSON.stringify(taskItem.data.id));
-        if(taskItem.data['statut'] === '0'){
+      /**
+       * CHANGEMENT D'ETAT D'UNE TACHE
+       */
+      taskItem.querySelector('.left').onclick = function(event) {
+        myApp.services.animators.swipe(taskItem, function() {
           var pendingList = document.querySelector('#pending-list');
-          pendingList.removeChild(document.getElementById(taskItem.id));
-          myApp.services.fixtures.splice(taskItem.data.i,1);
-          localStorage.setItem('tasks', myApp.services.fixtures);
-        }else if (taskItem.data['statut'] === '1'){
           var progressList = document.querySelector('#progress-list');
-          progressList.removeChild(document.getElementById(taskItem.id));
-          myApp.services.fixtures.splice(taskItem.data.i,1);
-          localStorage.setItem('tasks', myApp.services.fixtures);
-        }else if (taskItem.data['statut'] === '2'){
           var completedList = document.querySelector('#completed-list');
-          completedList.removeChild(document.getElementById(taskItem.id));
-          myApp.services.fixtures.splice(taskItem.data.i,1);
-          localStorage.setItem('tasks', myApp.services.fixtures);
-        }
+
+          for(let elem of document.querySelectorAll('ons-checkbox')){
+            elem.checked = false;
+          }
+
+          if(taskItem.data.statut === '0'){
+
+            myApp.services.fixtures[taskItem.data.id].statut = '1';
+            localStorage.setItem('tasks', myApp.services.fixtures);
+            pendingList.removeChild(document.getElementById(taskItem.id));
+            progressList.appendChild(taskItem);
+
+          }else if(taskItem.data.statut === '1'){
+
+            myApp.services.fixtures[taskItem.data.id].statut = '2';
+            localStorage.setItem('tasks', myApp.services.fixtures);
+            progressList.removeChild(document.getElementById(taskItem.id));
+            completedList.appendChild(taskItem);
+
+          }else if(taskItem.data.statut === '2'){
+
+            //myApp.services.fixtures[taskItem.data.id].statut = '3';
+            localStorage.setItem('tasks', myApp.services.fixtures);
+            completedList.removeChild(document.getElementById(taskItem.id));
+            myApp.services.fixtures.splice(taskItem.data.id, 1);
+            localStorage.setItem('tasks', myApp.services.fixtures);
+
+          }
+          console.log(myApp.services.fixtures.length);
+          console.log(localStorage.getItem('tasks'));
+        });
+
       };
 
+      taskItem.querySelector('.center').onclick = function() {
+        document.querySelector('#myNavigator')
+            .pushPage('html/details_task.html',
+                {
+                  animation: 'lift',
+                  data: {
+                    element: taskItem
+                  }
+                }
+            );
+      };
+
+      /**
+       * SUPPRESSION D'UNE TACHE
+       */
+      taskItem.querySelector('.right').onclick = function() {
+        myApp.services.animators.remove(taskItem, function() {
+          console.log(JSON.stringify(taskItem.data.id));
+          if (taskItem.data['statut'] === '0') {
+            var pendingList = document.querySelector('#pending-list');
+            pendingList.removeChild(document.getElementById(taskItem.id));
+            myApp.services.fixtures.splice(taskItem.data.id, 1);
+            localStorage.setItem('tasks', myApp.services.fixtures);
+          } else if (taskItem.data['statut'] === '1') {
+            var progressList = document.querySelector('#progress-list');
+            progressList.removeChild(document.getElementById(taskItem.id));
+            myApp.services.fixtures.splice(taskItem.data.id, 1);
+            localStorage.setItem('tasks', myApp.services.fixtures);
+          } else if (taskItem.data['statut'] === '2') {
+            var completedList = document.querySelector('#completed-list');
+            completedList.removeChild(document.getElementById(taskItem.id));
+            myApp.services.fixtures.splice(taskItem.data.id, 1);
+            localStorage.setItem('tasks', myApp.services.fixtures);
+          }
+        });
+      };
+
+    },
+    update: function(taskItem, data) {
+      if (data.title !== taskItem.data.title) {
+        // Update title view.
+        taskItem.querySelector('.center').innerHTML = data.title;
+      }
+
+      if (data.category !== taskItem.data.category) {
+        // Modify the item before updating categories.
+        taskItem.setAttribute('category', myApp.services.categories.parseId(data.category));
+        // Check if it's necessary to create new categories.
+        //myApp.services.categories.updateAdd(data.category);
+        // Check if it's necessary to remove empty categories.
+        //myApp.services.categories.updateRemove(taskItem.data.category);
+
+      }
+
+      // Store the new data within the element.
+      taskItem.data = data;
     },
     removeTaskToHomePage : function () {
 
       var pendingTaskList = document.querySelector('#pending-list');
       var progressTaskList = document.querySelector('#progress-list');
       var completedTaskList = document.querySelector('#completed-list');
-
-      if(pendingTaskList.childElementCount !== 0 && progressTaskList.childElementCount !== 0 && completedTaskList.childElementCount !== 0){
+      myApp.storage.deleteAllTasks();
 
         for(let i=0;i<myApp.services.fixtures.length;i++){
           if(completedTaskList.querySelector("#taskElem"+i)){
@@ -70,9 +147,6 @@ myApp.services = {
           }
         }
 
-      }else{
-        console.error('Vous ne pouvez pas supprimer des tâches, elles le sont déjà !');
-      }
     }
   },
   categories:{
@@ -134,6 +208,39 @@ myApp.services = {
           categoryTaskList.removeChild(document.querySelector('#categoryMenuElem'+i));
         }
       }
+    }
+  },
+  animators: {
+
+    // Swipe animation for task completion.
+    swipe: function(listItem, callback) {
+      var animation="";
+      if(listItem.parentElement.id === 'pending-list'){
+        animation = 'animation-swipe-right';
+      }else if(listItem.parentElement.id === 'progress-list'){
+        animation = 'animation-swipe-right';
+      }
+      else if(listItem.parentElement.id === 'completed-list'){
+        animation = 'animation-remove';
+      }
+      listItem.classList.add('hide-children');
+      listItem.classList.add(animation);
+
+      setTimeout(function() {
+        listItem.classList.remove(animation);
+        listItem.classList.remove('hide-children');
+        callback();
+      }, 950);
+    },
+
+    // Remove animation for task deletion.
+    remove: function(listItem, callback) {
+      listItem.classList.add('animation-remove');
+      listItem.classList.add('hide-children');
+
+      setTimeout(function() {
+        callback();
+      }, 750);
     }
   },
   fixtures: [

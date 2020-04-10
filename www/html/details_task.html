@@ -1,2 +1,67 @@
 <ons-page id="detailsTaskPage">
+    <ons-toolbar  class="toolbarCustom">
+        <div class="left"><ons-back-button>Retour</ons-back-button></div>
+        <div class="center" style="color: #005cbf">Tâche</div>
+        <div class="right">
+            <ons-toolbar-button component="button/save-task">
+                <ons-if platform="android">
+                    <ons-icon icon="md-save"></ons-icon>
+                </ons-if>
+                <ons-if platform="ios other">
+                    Sauver
+                </ons-if>
+            </ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+
+    <ons-list-title>Modifier votre tâche</ons-list-title>
+    <ons-list>
+        <ons-list-item modifier="nodivider">
+            <ons-if platform="ios other" class="left left-label">
+                Titre
+            </ons-if>
+            <div class="center">
+                <ons-input id="inputTitleDetailTask" type="text" placeholder="Sortir les poubelles ?" float></ons-input>
+            </div>
+        </ons-list-item>
+        <ons-list-item modifier="nodivider">
+            <ons-if platform="ios other" class="left left-label">
+                Description
+            </ons-if>
+            <div class="center">
+                <ons-input id="inputDescrDetailTask" type="text" placeholder="Description de la tâche" float></ons-input>
+            </div>
+        </ons-list-item>
+        <ons-list-item modifier="nodivider">
+            <ons-if platform="ios other" class="left left-label">
+                Date
+            </ons-if>
+            <div class="center">
+                <ons-input id="inputDateDetailTask" type="date" placeholder="Date que vous désirez" float></ons-input>
+            </div>
+        </ons-list-item>
+    </ons-list>
+
+    <ons-list-title>Options</ons-list-title>
+    <ons-list>
+        <ons-list-item modifier="nodivider">
+            <label class="center" for="inner-urgent-input">
+                Urgent
+            </label>
+            <div class="right">
+                <ons-switch id="inputUrgentDetailTask" input-id="inner-urgent-input"></ons-switch>
+            </div>
+        </ons-list-item>
+    </ons-list>
+    <ons-list-title>Changez la catégorie de votre tâche</ons-list-title>
+    <ons-list-item>
+        <ons-input class="detailCateInput" id="inputNewCateDetailTask" placeholder="AJouter une catégorie"></ons-input>
+        <div class="right">
+            <ons-button id="addCategory">
+                <ons-icon icon="fa-plus"></ons-icon>
+            </ons-button>
+        </div>
+    </ons-list-item>
+    <ons-list class="listCategoryDetailTask">
+    </ons-list>
 </ons-page>
