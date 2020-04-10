@@ -25,7 +25,7 @@ document.addEventListener('init', function(event) {
             && !document.querySelector('#pendingTasksPage ons-list-item')
         ) {
             myApp.services.fixtures.forEach(function (data) {
-                if(data['statut'] === '0' )  {
+                if(data['statut'] === '0' && data['date'] > Date())  {
                     myApp.services.tasks.create(data);
                 }
             });
@@ -35,7 +35,7 @@ document.addEventListener('init', function(event) {
             && !document.querySelector('#progressTasksPage ons-list-item')
         ){
             myApp.services.fixtures.forEach(function (data) {
-                if(data['statut'] === '1' )  {
+                if(data['statut'] === '1' && data['date'] > Date() )  {
                     myApp.services.tasks.create(data);
                 }
             });
@@ -44,7 +44,7 @@ document.addEventListener('init', function(event) {
             && !document.querySelector('#completedTasksPage ons-list-item')
         ){
             myApp.services.fixtures.forEach(function (data) {
-                if(data['statut'] === '2' )  {
+                if(data['statut'] === '2' && data['date'] > Date() )  {
                     myApp.services.tasks.create(data);
                 }
             });

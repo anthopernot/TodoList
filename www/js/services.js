@@ -258,6 +258,15 @@ myApp.services = {
       date: Date(),
       statut: '0',
       urgent: false
+    },
+    {
+      id:1,
+      title: 'Visit Japan',
+      category: 'Category 1',
+      description: 'Some description.',
+      date: 'Sun May 10 2020 17:51:55 GMT+0200 (heure d’été d’Europe centrale)',
+      statut: '0',
+      urgent: false
     }
   ],
   categoriesTab: [
