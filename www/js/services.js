@@ -193,11 +193,37 @@ myApp.services = {
           categoryTaskList.appendChild(categoryItem);
         }
 
-      categoryItem.querySelector('.right').onclick = function() {
-          console.log(JSON.stringify(categoryItem.data.id));
-          categoryTaskList.removeChild(document.getElementById(categoryItem.id));
-          myApp.services.categoriesTab.splice(categoryItem.data.i,1);
-          localStorage.setItem('tasks', myApp.services.categoriesTab);
+
+      /**
+       * SUPPRESSION D'UNE CATEGORIE
+        */
+        categoryItem.querySelector('.right').onclick = function() {
+
+            console.log(JSON.stringify(categoryItem.data.id));
+            var pendingTaskList = document.querySelector('#pending-list');
+            var progressTaskList = document.querySelector('#progress-list');
+            var completedTaskList = document.querySelector('#completed-list');
+            for(let i=0;i<myApp.services.fixtures.length;i++){
+              if(myApp.services.fixtures[i].category === categoryItem.data.name){
+                if(completedTaskList.querySelector("#taskElem"+i)){
+                  completedTaskList.removeChild(document.querySelector("#taskElem"+i));
+                  myApp.services.fixtures.splice(myApp.services.fixtures[i], 1);
+                  console.log('Suppression réussi');
+                }else if(pendingTaskList.querySelector("#taskElem"+i)){
+                  pendingTaskList.removeChild(document.querySelector("#taskElem"+i));
+                  myApp.services.fixtures.splice(myApp.services.fixtures[i], 1);
+                  console.log('Suppression réussi');
+                }else if(progressTaskList.querySelector("#taskElem"+i)){
+                  progressTaskList.removeChild(document.querySelector("#taskElem"+i));
+                  myApp.services.fixtures.splice(myApp.services.fixtures[i], 1);
+                  console.log('Suppression réussi');
+                }
+              }
+            }
+            categoryTaskList.removeChild(document.getElementById(categoryItem.id));
+            myApp.services.categoriesTab.splice(categoryItem.data.i,1);
+            localStorage.setItem('tasks', myApp.services.categoriesTab);
+
       };
 
     },
@@ -212,7 +238,6 @@ myApp.services = {
   },
   animators: {
 
-    // Swipe animation for task completion.
     swipe: function(listItem, callback) {
       var animation="";
       if(listItem.parentElement.id === 'pending-list'){
@@ -233,7 +258,6 @@ myApp.services = {
       }, 950);
     },
 
-    // Remove animation for task deletion.
     remove: function(listItem, callback) {
       listItem.classList.add('animation-remove');
       listItem.classList.add('hide-children');
@@ -245,18 +269,18 @@ myApp.services = {
   },
   fixtures: [
     {
-      'id': 0,
-      'title': 'Download OnsenUUUUI',
-      'category': 'Programmikkkkng',
-      'description': 'Some description.',
-      'date': Date(),
-      'statut': '2',
-      'urgent': false
+      id:0,
+      title: 'Download OnsenUUUUI',
+      category: 'Category 2',
+      description: 'Some description.',
+      date: Date(),
+      statut: '2',
+      urgent: false
     },
     {
       id:1,
       title: 'Install Monaca CLI',
-      category: 'Programming',
+      category: 'Category 2',
       description: 'Some description.',
       date: Date(),
       statut: '0',
@@ -265,7 +289,7 @@ myApp.services = {
     {
       id:2,
       title: 'Star Onsen UI repo on Github',
-      category: 'Super important',
+      category: 'Category 1',
       description: 'Some description.',
       date: Date(),
       statut: '1',
@@ -274,7 +298,7 @@ myApp.services = {
     {
       id:3,
       title: 'Send donations to Fran and Andreas',
-      category: 'Super important',
+      category: 'Category 1',
       description: 'Some description.',
       date: Date(),
       statut: '0',
@@ -283,7 +307,7 @@ myApp.services = {
     {
       id:4,
       title: 'Profit',
-      category: '',
+      category: 'Category 1',
       description: 'Some description.',
       date: Date(),
       statut: '0',
@@ -292,7 +316,7 @@ myApp.services = {
     {
       id:5,
       title: 'Visit Japan',
-      category: 'Travels',
+      category: 'Category 1',
       description: 'Some description.',
       date: Date(),
       statut: '0',

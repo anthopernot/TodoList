@@ -78,7 +78,7 @@ document.addEventListener('init', function(event) {
             var name = document.querySelector('#inputNameTask').value;
             var description = document.querySelector('#inputDescrTask').value;
             var date = document.querySelector('#inputDateTask').value;
-            var urgent = document.querySelector('#inputUrgent').checked;
+            var urgent = document.querySelector('#inputUrgentNewTask').checked;
             var radios = document.getElementsByName('categoryNewTask');
             var category;
             for(var i = 0; i < radios.length; i++){
