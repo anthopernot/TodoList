@@ -72,19 +72,7 @@ myApp.controllers = {
         ons.notification.alert('You must provide a task title.');
       }
     };
-  }
-  /**
-  addCategory: function () {
-    var value = document.querySelector('.newTaskInput').textContent;
-
-      if(value !== ""){
-         myApp.services.categories.create(value);
-      }else{
-        console.error('Veuillez renseignez un nom à la catégorie');
-      }
-
-  }
-   */
+  },
 
 };
 

@@ -20,16 +20,18 @@ myApp.services = {
 
       taskItem.data = data;
 
-      if(taskItem.data['statut'] === '0'){
-        var pendingList = document.querySelector('#pending-list');
-        pendingList.insertBefore(taskItem, taskItem.data['urgent'] ? pendingList.firstChild : null);
-      }else if (taskItem.data['statut'] === '1'){
-        var progressList = document.querySelector('#progress-list');
-        progressList.insertBefore(taskItem, taskItem.data['urgent'] ? progressList.firstChild : null);
-      }else if (taskItem.data['statut'] === '2'){
-        var completedList = document.querySelector('#completed-list');
-        completedList.insertBefore(taskItem, taskItem.data['urgent'] ? completedList.firstChild : null);
-      }
+
+        if(taskItem.data['statut'] === '0' ){
+          var pendingList = document.querySelector('#pending-list');
+          pendingList.insertBefore(taskItem, taskItem.data['urgent'] ? pendingList.firstChild : null);
+        }else if (taskItem.data['statut'] === '1' ){
+          var progressList = document.querySelector('#progress-list');
+          progressList.insertBefore(taskItem, taskItem.data['urgent'] ? progressList.firstChild : null);
+        }else if (taskItem.data['statut'] === '2' ){
+          var completedList = document.querySelector('#completed-list');
+          completedList.insertBefore(taskItem, taskItem.data['urgent'] ? completedList.firstChild : null);
+        }
+
 
       /**
        * CHANGEMENT D'ETAT D'UNE TACHE
@@ -44,45 +46,32 @@ myApp.services = {
             elem.checked = false;
           }
 
-          if(taskItem.data.statut === '0'){
+          if(taskItem.data['statut'] === '0'){
 
-            myApp.services.fixtures[taskItem.data.id].statut = '1';
-            localStorage.setItem('tasks', myApp.services.fixtures);
-            pendingList.removeChild(document.getElementById(taskItem.id));
+            myApp.services.fixtures[taskItem.data['id']].statut = '1';
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
+            pendingList.removeChild(document.querySelector("#taskElem"+taskItem.data.id+""));
             progressList.appendChild(taskItem);
 
-          }else if(taskItem.data.statut === '1'){
+          }else if(taskItem.data['statut'] === '1'){
 
-            myApp.services.fixtures[taskItem.data.id].statut = '2';
-            localStorage.setItem('tasks', myApp.services.fixtures);
-            progressList.removeChild(document.getElementById(taskItem.id));
+            myApp.services.fixtures[taskItem.data['id']].statut = '2';
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
+            progressList.removeChild(document.querySelector("#taskElem"+taskItem.data.id+""));
             completedList.appendChild(taskItem);
 
-          }else if(taskItem.data.statut === '2'){
+          }else if(taskItem.data['statut'] === '2'){
 
-            //myApp.services.fixtures[taskItem.data.id].statut = '3';
-            localStorage.setItem('tasks', myApp.services.fixtures);
-            completedList.removeChild(document.getElementById(taskItem.id));
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
+            completedList.removeChild(document.querySelector("#taskElem"+taskItem.data.id+""));
             myApp.services.fixtures.splice(taskItem.data.id, 1);
-            localStorage.setItem('tasks', myApp.services.fixtures);
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
 
           }
           console.log(myApp.services.fixtures.length);
-          console.log(localStorage.getItem('tasks'));
+          console.log(JSON.stringify(localStorage.getItem('tasks')));
         });
 
-      };
-
-      taskItem.querySelector('.center').onclick = function() {
-        document.querySelector('#myNavigator')
-            .pushPage('html/details_task.html',
-                {
-                  animation: 'lift',
-                  data: {
-                    element: taskItem
-                  }
-                }
-            );
       };
 
       /**
@@ -95,40 +84,21 @@ myApp.services = {
             var pendingList = document.querySelector('#pending-list');
             pendingList.removeChild(document.getElementById(taskItem.id));
             myApp.services.fixtures.splice(taskItem.data.id, 1);
-            localStorage.setItem('tasks', myApp.services.fixtures);
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
           } else if (taskItem.data['statut'] === '1') {
             var progressList = document.querySelector('#progress-list');
-            progressList.removeChild(document.getElementById(taskItem.id));
+            progressList.removeChild(document.querySelector("#"+taskItem.id+""));
             myApp.services.fixtures.splice(taskItem.data.id, 1);
-            localStorage.setItem('tasks', myApp.services.fixtures);
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
           } else if (taskItem.data['statut'] === '2') {
             var completedList = document.querySelector('#completed-list');
             completedList.removeChild(document.getElementById(taskItem.id));
             myApp.services.fixtures.splice(taskItem.data.id, 1);
-            localStorage.setItem('tasks', myApp.services.fixtures);
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
           }
         });
       };
 
-    },
-    update: function(taskItem, data) {
-      if (data.title !== taskItem.data.title) {
-        // Update title view.
-        taskItem.querySelector('.center').innerHTML = data.title;
-      }
-
-      if (data.category !== taskItem.data.category) {
-        // Modify the item before updating categories.
-        taskItem.setAttribute('category', myApp.services.categories.parseId(data.category));
-        // Check if it's necessary to create new categories.
-        //myApp.services.categories.updateAdd(data.category);
-        // Check if it's necessary to remove empty categories.
-        //myApp.services.categories.updateRemove(taskItem.data.category);
-
-      }
-
-      // Store the new data within the element.
-      taskItem.data = data;
     },
     removeTaskToHomePage : function () {
 
@@ -146,6 +116,18 @@ myApp.services = {
             progressTaskList.removeChild(document.querySelector("#taskElem"+i));
           }
         }
+
+    },
+    removeTaskToHomePageForCate : function () {
+      for(let i=0;i<myApp.services.fixtures.length;i++){
+        if(document.querySelector('#completed-list').querySelector("#taskElem"+i)){
+          document.querySelector('#completed-list').removeChild(document.querySelector("#taskElem"+i));
+        }else if(document.querySelector('#pending-list').querySelector("#taskElem"+i)){
+          document.querySelector('#pending-list').removeChild(document.querySelector("#taskElem"+i));
+        }else if(document.querySelector('#progress-list').querySelector("#taskElem"+i)){
+          document.querySelector('#progress-list').removeChild(document.querySelector("#taskElem"+i));
+        }
+      }
 
     }
   },
@@ -204,25 +186,25 @@ myApp.services = {
             var progressTaskList = document.querySelector('#progress-list');
             var completedTaskList = document.querySelector('#completed-list');
             for(let i=0;i<myApp.services.fixtures.length;i++){
-              if(myApp.services.fixtures[i].category === categoryItem.data.name){
-                if(completedTaskList.querySelector("#taskElem"+i)){
-                  completedTaskList.removeChild(document.querySelector("#taskElem"+i));
-                  myApp.services.fixtures.splice(myApp.services.fixtures[i], 1);
+              if(myApp.services.fixtures[categoryItem.data.id].category === categoryItem.data.name){
+                if(completedTaskList.querySelector("#taskElem"+categoryItem.data.id)){
+                  completedTaskList.removeChild(document.querySelector("#taskElem"+categoryItem.data.id));
+                  myApp.services.fixtures.splice(myApp.services.fixtures[categoryItem.data.id], 1);
                   console.log('Suppression réussi');
-                }else if(pendingTaskList.querySelector("#taskElem"+i)){
-                  pendingTaskList.removeChild(document.querySelector("#taskElem"+i));
-                  myApp.services.fixtures.splice(myApp.services.fixtures[i], 1);
+                }else if(pendingTaskList.querySelector("#taskElem"+categoryItem.data.id)){
+                  pendingTaskList.removeChild(document.querySelector("#taskElem"+categoryItem.data.id));
+                  myApp.services.fixtures.splice(myApp.services.fixtures[categoryItem.data.id], 1);
                   console.log('Suppression réussi');
-                }else if(progressTaskList.querySelector("#taskElem"+i)){
-                  progressTaskList.removeChild(document.querySelector("#taskElem"+i));
-                  myApp.services.fixtures.splice(myApp.services.fixtures[i], 1);
+                }else if(progressTaskList.querySelector("#taskElem"+categoryItem.data.id)){
+                  progressTaskList.removeChild(document.querySelector("#taskElem"+categoryItem.data.id));
+                  myApp.services.fixtures.splice(myApp.services.fixtures[categoryItem.data.id], 1);
                   console.log('Suppression réussi');
                 }
               }
             }
             categoryTaskList.removeChild(document.getElementById(categoryItem.id));
             myApp.services.categoriesTab.splice(categoryItem.data.i,1);
-            localStorage.setItem('tasks', myApp.services.categoriesTab);
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.categoriesTab));
 
       };
 
@@ -270,52 +252,7 @@ myApp.services = {
   fixtures: [
     {
       id:0,
-      title: 'Download OnsenUUUUI',
-      category: 'Category 2',
-      description: 'Some description.',
-      date: Date(),
-      statut: '2',
-      urgent: false
-    },
-    {
-      id:1,
-      title: 'Install Monaca CLI',
-      category: 'Category 2',
-      description: 'Some description.',
-      date: Date(),
-      statut: '0',
-      urgent: false
-    },
-    {
-      id:2,
       title: 'Star Onsen UI repo on Github',
-      category: 'Category 1',
-      description: 'Some description.',
-      date: Date(),
-      statut: '1',
-      urgent: false
-    },
-    {
-      id:3,
-      title: 'Send donations to Fran and Andreas',
-      category: 'Category 1',
-      description: 'Some description.',
-      date: Date(),
-      statut: '0',
-      urgent: false
-    },
-    {
-      id:4,
-      title: 'Profit',
-      category: 'Category 1',
-      description: 'Some description.',
-      date: Date(),
-      statut: '0',
-      urgent: false
-    },
-    {
-      id:5,
-      title: 'Visit Japan',
       category: 'Category 1',
       description: 'Some description.',
       date: Date(),
@@ -327,10 +264,6 @@ myApp.services = {
     {
       id:0,
       name: 'Category 1',
-    },
-    {
-      id:1,
-      name: 'Category 2',
     }
   ]
 };

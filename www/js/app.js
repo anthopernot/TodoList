@@ -25,7 +25,7 @@ document.addEventListener('init', function(event) {
             && !document.querySelector('#pendingTasksPage ons-list-item')
         ) {
             myApp.services.fixtures.forEach(function (data) {
-                if(data['statut'] === '0')  {
+                if(data['statut'] === '0' )  {
                     myApp.services.tasks.create(data);
                 }
             });
@@ -35,7 +35,7 @@ document.addEventListener('init', function(event) {
             && !document.querySelector('#progressTasksPage ons-list-item')
         ){
             myApp.services.fixtures.forEach(function (data) {
-                if(data['statut'] === '1')  {
+                if(data['statut'] === '1' )  {
                     myApp.services.tasks.create(data);
                 }
             });
@@ -44,7 +44,7 @@ document.addEventListener('init', function(event) {
             && !document.querySelector('#completedTasksPage ons-list-item')
         ){
             myApp.services.fixtures.forEach(function (data) {
-                if(data['statut'] === '2')  {
+                if(data['statut'] === '2' )  {
                     myApp.services.tasks.create(data);
                 }
             });
@@ -56,12 +56,35 @@ document.addEventListener('init', function(event) {
             myApp.services.categoriesTab.forEach(function (data) {
                 myApp.services.categories.addToMenuPage(data);
             });
-        }
-        document.querySelector('#allCategory').addEventListener('click', function (e) {
-            myApp.services.categoriesTab.forEach(function (data) {
-                myApp.services.categories.addToMenuPage(data);
+            document.querySelector('#allTaskTabbarPage').onclick = function (data) {
+                if(myApp.services.categoriesTab.length !== 0){
+                    myApp.services.tasks.removeTaskToHomePageForCate();
+                    myApp.services.fixtures.forEach(function (data) {
+                        myApp.services.tasks.create(data);
+                    });
+                }
+            };
+            document.querySelector('#allCategory').addEventListener('click', function (e) {
+                myApp.services.categoriesTab.forEach(function (data) {
+                    if(myApp.services.categoriesTab.length !== 0){
+                        myApp.services.categories.addToMenuPage(data);
+                    }
+                });
             });
-        });
+            for (let i=0;i<myApp.services.categoriesTab.length;i++){
+                document.querySelector("#categoryMenuElem"+i).onclick = function () {
+                    //console.log(myApp.services.categoriesTab[i]);
+                    if(myApp.services.categoriesTab.length !== 0) {
+                        myApp.services.tasks.removeTaskToHomePageForCate();
+                        myApp.services.fixtures.forEach(function (data) {
+                            if (myApp.services.categoriesTab[i].name === data.category) {
+                                myApp.services.tasks.create(data);
+                            }
+                        });
+                    }
+                }
+            }
+        }
     }
 
     if(page.id === 'newTaskPage'){
@@ -74,6 +97,7 @@ document.addEventListener('init', function(event) {
                 myApp.services.categories.create(cateJSON);
             });
         }
+
         document.querySelector('#btnSaveTask').addEventListener('click',function () {
             var name = document.querySelector('#inputNameTask').value;
             var description = document.querySelector('#inputDescrTask').value;
@@ -86,7 +110,11 @@ document.addEventListener('init', function(event) {
                     category = radios[i].value;
                 }
             }
-            if(name !== "" && description !== "" && date !== ""){
+            if(date < Date()){
+                date = Date()
+            }
+
+            if((name !== "" && description !== "" && date !=="" ) ){
                 var taskJSON = {
                     id:myApp.services.fixtures.length,
                     title: name,
@@ -96,6 +124,7 @@ document.addEventListener('init', function(event) {
                     statut: '0',
                     urgent: urgent
                 };
+
                 myApp.storage.createTask(taskJSON);
                 myApp.services.tasks.create(taskJSON);
                 document.querySelector('#myNavigator').popPage();

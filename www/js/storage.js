@@ -2,6 +2,7 @@
 localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
 localStorage.setItem('categories', JSON.stringify(myApp.services.categoriesTab));
 
+
 myApp.storage = {
     storageAvailable: function (type) {
         try {
@@ -50,7 +51,7 @@ myApp.storage = {
                 urgent: data.urgent
             };
             myApp.services.fixtures.push( taskJSON );
-            localStorage.setItem('tasks', myApp.services.fixtures);
+            localStorage.setItem('tasks', JSON.stringify(myApp.services.fixtures));
         }
         else {
             console.log("LocalStorage n'est pas disponible.");
@@ -63,7 +64,7 @@ myApp.storage = {
               name:data.name
             };
             myApp.services.categoriesTab.push(cateJSON);
-            localStorage.setItem('categories', myApp.services.categoriesTab);
+            localStorage.setItem('categories', JSON.stringify(myApp.services.categoriesTab));
             myApp.services.categories.create(cateJSON);
         }
         else {
