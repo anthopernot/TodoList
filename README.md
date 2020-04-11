@@ -1,4 +1,4 @@
-# TodoList - PERNOT Anthony & CHEVALIER Nathan S4-AI2
+# TodoList - PERNOT Anthony S4-AI2
 TodoList - Projet de Conception d'application mobile @IUTNC-INFO
 
 ## Fonctionnalités apportés
@@ -17,4 +17,3 @@ TodoList - Projet de Conception d'application mobile @IUTNC-INFO
 ## Contributors
 
 - Anthony PERNOT - S4 AI2 : anthony.pernot@hotmail.fr
-- CHEVALIER Nathan - S4 AI2 : nat.chvlr@gmail.com
